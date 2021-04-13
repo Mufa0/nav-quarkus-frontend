@@ -1,0 +1,16 @@
+<div class="col-md-12">
+    <h2>
+        {{article.title}}
+    </h2>
+    <p>
+        {{article.content}}
+    </p>
+    <div class="row">
+        <div class="col-md-4">
+            <button class="btn btn-info" routerLink="edit">Edit</button>
+        </div>
+        <div class="col-md-4">
+            <button class="btn btn-danger" (click)="onDelete()">Delete</button>
+        </div>
+    </div>
+</div>

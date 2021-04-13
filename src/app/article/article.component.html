@@ -1,0 +1,8 @@
+<div class="row list-group" *ngFor="let article of articles">
+    <app-article-item [article]="article" class="list-group-item"></app-article-item>
+</div>
+<div class="row">
+    <div class="col-xs-10 text-right">
+        <button class="btn btn-primary" type="button" routerLink="/articles/create"> Create </button>
+    </div>
+</div>

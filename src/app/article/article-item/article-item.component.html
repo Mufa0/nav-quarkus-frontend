@@ -1,0 +1,11 @@
+<div class="col-md-12">
+    <h2>
+        {{article.title}}
+    </h2>
+    <p>
+        {{article.content | shorten:20}}
+    </p>
+    <p>
+        <a class="btn" [routerLink]="['/articles',article.id]">View details »</a>
+    </p>
+</div>

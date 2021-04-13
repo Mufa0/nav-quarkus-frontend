@@ -1,0 +1,15 @@
+<form class="col-xs-8" [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label for="title">Title</label>
+      <input type="text" class="form-control" id="title" aria-describedby="emailHelp" placeholder="Enter title" formControlName="title">
+    </div>
+    <div class="form-group">
+      <label for="content">Content</label>
+      <textarea class="form-control vertical" id="content" formControlName="content"></textarea>
+    </div>
+    <div class="row">
+      <div class="col-md-4">
+        <button class="btn btn-primary" type="submit">Save</button>
+      </div>
+    </div>
+</form>
