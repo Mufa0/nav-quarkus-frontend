@@ -12,20 +12,19 @@ export class ArticleDetailComponent implements OnInit {
 
   article: ArticleResponse;
 
-  id: number;
 
   constructor(private route: ActivatedRoute,private navigation: Router, private articleService: ArticleService) { }
 
+  
   ngOnInit(): void {
-    this.id = +this.route.snapshot.params["id"];
-    this.article = this.articleService.getArticle(this.id);
-    if(!this.article){
-      this.navigation.navigate(["/article"])
-    }
+    this.route.data.subscribe({
+      next: (data: {article:ArticleResponse}) => {this.article = data.article},
+      error: (error) => console.log(error)
+    })
   }
 
   onDelete(){
-    this.articleService.deleteArticle(this.id);
+    this.articleService.deleteArticle(this.article.id);
     this.navigation.navigate(["/articles"])
   }
 

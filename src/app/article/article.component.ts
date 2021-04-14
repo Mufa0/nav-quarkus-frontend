@@ -18,13 +18,8 @@ export class ArticleComponent implements OnInit, OnDestroy {
   constructor(private articleService: ArticleService, private navigation: Router) { }
 
   ngOnInit(): void {
-    this.articleService.getArticlesFromBackend().subscribe(
-      (articles) => this.articles = articles,
-      error => console.log(error)
-    );
-    this.subscriptions.push(this.articleService.articlesChangedSubject.subscribe(
-      articles => this.articles = articles
-    ))
+    this.fetchArticles()
+    this.subscriptions.push(this.articleService.articlesChangedSubject.subscribe(() => this.fetchArticles()))
   }
 
   ngOnDestroy(){
@@ -35,5 +30,12 @@ export class ArticleComponent implements OnInit, OnDestroy {
 
   onCreate(){
     this.navigation.navigate(['/articles/create'])
+  }
+
+  fetchArticles(){
+    this.articleService.getArticles().subscribe({
+      next: (articles: ArticleResponse[]) => this.articles = articles,
+      error: (error) => console.log(error)
+    });
   }
 }

@@ -1,73 +1,41 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
+import { Observable, Observer, Subject } from 'rxjs';
+import { SERVER_API } from '../../globals';
 import { ArticleRequest } from '../../models/article/article-request.model';
 import { ArticleResponse } from '../../models/article/article-response.model';
 
+import { catchError,tap } from 'rxjs/operators';
+import { HttpErrorHandler } from 'src/app/http-error-handler.service';
+
+
 @Injectable({ providedIn: 'root' })
 export class ArticleService {
-  public constructor(private http: HttpClient) {}
-  private articles: ArticleResponse[] = [
-    new ArticleResponse(1, 'First article', 'My first article!'),
-    new ArticleResponse(2, 'Second article', 'My second article!'),
-    new ArticleResponse(3, 'Third article', 'My third article!'),
-  ];
+
+  articlesUri: string = SERVER_API + 'articles';
+  public constructor(private http: HttpClient, private errorHandler: HttpErrorHandler) {}
 
 
-  public articlesChangedSubject: Subject<ArticleResponse[]> = new Subject();
+  public articlesChangedSubject: Subject<void> = new Subject();
   public getArticles() {
-    return this.articles.slice();
-  }
-  public getArticlesFromBackend() {
-    return this.http
-      .get<ArticleResponse[]>('http://localhost:8080/articles');
+    return this.http.get<ArticleResponse[]>(this.articlesUri).pipe(catchError(e => this.errorHandler.handlError(e)));
   }
 
-  public getArticle(id: number): ArticleResponse {
-    return this.articles.find((article) => article.id === id);
+  public getArticle<T>(id: number): Observable<T> {
+    return this.http.get<T>(this.articlesUri+"/"+id).pipe(catchError( e => this.errorHandler.handlError<T>(e)));
   }
 
   public updateArticle(request: ArticleRequest) {
-    const index = this.articles.indexOf(
-      this.articles.find((x) => x.id === request.id)
-    );
-    this.articles.splice(index, 1);
-    this.articles.push(
-      new ArticleResponse(request.id, request.title, request.content)
-    );
-
-    this.articlesChangedSubject.next(
-      this.articles
-        .sort((a, b) => {
-          return a.id >= b.id ? 1 : -1;
-        })
-        .slice()
-    );
+    return this.http.put<ArticleResponse>(this.articlesUri+"/"+request.id, request).pipe(catchError( e => this.errorHandler.handlError(e)),tap( ()=> this.articlesChangedSubject.next())).subscribe();
   }
 
   public createArticle(request: ArticleRequest) {
-    const id = this.articles.length + 1;
-    this.articles.push(new ArticleResponse(id, request.title, request.content));
 
-    this.articlesChangedSubject.next(
-      this.articles
-        .sort((a, b) => {
-          return a.id >= b.id ? 1 : -1;
-        })
-        .slice()
-    );
+    return this.http.post<ArticleResponse>(this.articlesUri, request).pipe(catchError(e => this.errorHandler.handlError(e)), tap(() => this.articlesChangedSubject.next())).subscribe();
+
   }
 
   public deleteArticle(id: number) {
-    const index = this.articles.indexOf(this.articles.find((x) => x.id === id));
-    this.articles.splice(index, 1);
-
-    this.articlesChangedSubject.next(
-      this.articles
-        .sort((a, b) => {
-          return a.id >= b.id ? 1 : -1;
-        })
-        .slice()
-    );
+    return this.http.delete(this.articlesUri+"/"+id).pipe(catchError( e => this.errorHandler.handlError(e)), tap(() => this.articlesChangedSubject.next())).subscribe();
   }
 }

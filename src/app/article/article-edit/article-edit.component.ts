@@ -14,28 +14,24 @@ export class ArticleEditComponent implements OnInit {
 
   article: ArticleResponse;
 
-  id: number;
-
   form: FormGroup;
 
   constructor(private route: ActivatedRoute,private navigation: Router, private articleService: ArticleService) { }
 
   ngOnInit(): void {
-    this.id = +this.route.snapshot.params["id"]
-    if(this.id){
-      this.article = this.articleService.getArticle(this.id); 
-      if(!this.article){
-        this.navigation.navigate(["/article"])
-      }
+    if(this.route.snapshot.params["id"]){
+      this.route.data.subscribe({
+        next: (data: {article:ArticleResponse}) => {this.article = data.article},
+        error: (error) => console.log(error)
+      })
     }else{
-      this.article = new ArticleResponse(null,null, null);
+      this.article = new ArticleResponse(null,null,null);
     }
-
-    this.form = new FormGroup({
-       'title': new FormControl(this.article.title),
-       'content': new FormControl(this.article.content)
-    })
     
+    this.form = new FormGroup({
+      'title': new FormControl(this.article.title),
+      'content': new FormControl(this.article.content)
+   })
   }
 
   onSubmit(){
@@ -45,10 +41,7 @@ export class ArticleEditComponent implements OnInit {
       this.articleService.updateArticle(article)
     }else{
       this.articleService.createArticle(article)
-    }
-    
-    
+    } 
     this.navigation.navigate(["/article"])
   }
-
 }
