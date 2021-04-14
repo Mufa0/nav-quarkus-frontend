@@ -16,11 +16,16 @@ export class ArticleDetailComponent implements OnInit {
   constructor(private route: ActivatedRoute,private navigation: Router, private articleService: ArticleService) { }
 
   
-  ngOnInit(): void {
-    this.route.data.subscribe({
-      next: (data: {article:ArticleResponse}) => {this.article = data.article},
-      error: (error) => console.log(error)
-    })
+  ngOnInit(){
+    console.log("Something")
+    this.route.data.subscribe(
+      (data: {article:ArticleResponse}) => {
+        if(data.article){
+          this.article = data.article
+        }else{
+          this.navigation.navigate(["/articles"])
+        }
+      })
   }
 
   onDelete(){

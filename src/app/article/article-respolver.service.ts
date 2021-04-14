@@ -1,8 +1,7 @@
 import { Injectable } from "@angular/core";
-import { ActivatedRouteSnapshot, Resolve, Router, RouterStateSnapshot } from "@angular/router";
-import { EMPTY, Observable } from "rxjs";
-import { catchError, mergeMap } from "rxjs/operators";
-import { of } from "rxjs";
+import { ActivatedRouteSnapshot,  Resolve, Router, RouterStateSnapshot } from "@angular/router";
+import {  Observable, of, throwError } from "rxjs";
+import { catchError } from "rxjs/operators";
 import { ArticleResponse } from "../shared/models/article/article-response.model";
 import { ArticleService } from "../shared/services/article/article.service";
 
@@ -13,17 +12,7 @@ export class ArticleResolverService implements Resolve<ArticleResponse>{
 
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): ArticleResponse | Observable<ArticleResponse> | Promise<ArticleResponse> {
         let id = +route.params["id"];
-        return this.articleService.getArticle<ArticleResponse>(id).pipe(
-                mergeMap(article =>{
-                    if(article){
-                        return of(article)
-                    }else{
-                        this.navigation.navigate(['/articles'])
-                        return EMPTY;
-                    }
-                })
-            )
-        
+        return <Observable<ArticleResponse>> this.articleService.getArticle(id).pipe(catchError(e => of(null)));
     }
 
 

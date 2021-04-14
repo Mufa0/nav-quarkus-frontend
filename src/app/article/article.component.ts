@@ -11,7 +11,7 @@ import { ArticleService } from '../shared/services/article/article.service';
 })
 export class ArticleComponent implements OnInit, OnDestroy {
 
-  articles: ArticleResponse[]
+  articles: ArticleResponse[] = [];
 
   subscriptions: Subscription[] = [];
 
