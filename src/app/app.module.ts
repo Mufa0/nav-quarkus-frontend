@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
@@ -10,6 +10,8 @@ import { HeaderComponent } from './header/header.component';
 import { ArticleDetailComponent } from './article/article-detail/article-detail.component';
 import { AppRouterModule } from './shared/app-router.module';
 import { ShortenPipe } from './shared/pipes/shorten.pipe';
+import { KeycloakAngularModule, KeycloakService } from 'keycloak-angular';
+import { keycloackInit } from './initializer';
 
 
 @NgModule({
@@ -26,9 +28,12 @@ import { ShortenPipe } from './shared/pipes/shorten.pipe';
     BrowserModule,
     AppRouterModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    KeycloakAngularModule
   ],
-  providers: [],
+  providers: [{
+    provide: APP_INITIALIZER, useFactory: keycloackInit, deps:[KeycloakService], multi:true
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

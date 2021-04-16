@@ -1,1 +1,21 @@
-<a class="navbar-brand" routerLink="/articles">News Article Viewer</a>
+<div class="row">
+    <a class="col-xs-12 navbar-brand" routerLink="/articles">News Article Viewer</a>
+</div>
+<hr>
+<div class="row">
+    <div class="col-xs-12">
+        <ul class="navbar-list">
+            <li class="navbar-item" style="cursor:pointer;" *ngIf="!loggedIn">
+                <a  class="navbar-link" (click)="onLogin()"> Login </a>
+            </li>
+            <li class="navbar-item" style="cursor:pointer;" *ngIf="loggedIn">
+                <a  class="navbar-link" (click)="onLogout()"> Logout </a>
+            </li>
+            <li class="navbar-item" style="cursor:pointer;" *ngIf="!loggedIn">
+                <a  class="navbar-link" (click)="onRegister()"> Register </a>
+            </li>
+        </ul>
+    </div>
+</div>
+
+
