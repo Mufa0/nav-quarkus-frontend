@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { KeycloakEvent, KeycloakService } from 'keycloak-angular';
 
 @Component({
@@ -10,7 +11,7 @@ export class HeaderComponent implements OnInit {
 
   loggedIn: boolean = false;
   token: string;
-  constructor(private keycloakService: KeycloakService) { }
+  constructor(private keycloakService: KeycloakService, private router:Router) { }
 
   ngOnInit(): void {
 
@@ -34,6 +35,10 @@ export class HeaderComponent implements OnInit {
       redirectUri: window.origin,
       prompt:'login'
     })
+  }
+
+  onCreate(){
+    this.router.navigate(['/articles/create'])
   }
 
 

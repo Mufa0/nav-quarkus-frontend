@@ -28,9 +28,6 @@ export class ArticleComponent implements OnInit, OnDestroy {
     }
   }
 
-  onCreate(){
-    this.navigation.navigate(['/articles/create'])
-  }
 
   fetchArticles(){
     this.articleService.getArticles().subscribe({

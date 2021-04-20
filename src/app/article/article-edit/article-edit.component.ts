@@ -25,7 +25,7 @@ export class ArticleEditComponent implements OnInit {
         error: (error) => console.log(error)
       })
     }else{
-      this.article = new ArticleResponse(null,null,null);
+      this.article = new ArticleResponse(null,null,null,null);
     }
     
     this.form = new FormGroup({

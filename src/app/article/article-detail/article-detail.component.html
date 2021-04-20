@@ -1,16 +1,14 @@
-<div class="col-md-12">
-    <h2>
-        {{article.title}}
-    </h2>
-    <p>
-        {{article.content}}
-    </p>
-    <div class="row">
-        <div class="col-md-4">
-            <button class="btn btn-info" routerLink="edit">Edit</button>
-        </div>
-        <div class="col-md-4">
-            <button class="btn btn-danger" (click)="onDelete()">Delete</button>
-        </div>
+<div class="container">
+    <h1>{{article.title}}</h1>
+    <blockquote class="text-center">
+        <p>{{article.content | shorten: 30 }}</p>
+        <footer>Author: <cite>{{article.user.name}}</cite></footer>
+    </blockquote>
+    <div class="text-center">
+        <img class="img-fluid" src="https://upload.wikimedia.org/wikipedia/commons/4/43/GameStop_Finance_%26_Investing_News.jpg" style="max-width:400px;">
+    </div>
+    <hr>
+    <div>
+        <p>{{article.content}}</p>
     </div>
 </div>

@@ -1,21 +1,26 @@
-<div class="row">
-    <a class="col-xs-12 navbar-brand" routerLink="/articles">News Article Viewer</a>
-</div>
-<hr>
-<div class="row">
-    <div class="col-xs-12">
-        <ul class="navbar-list">
-            <li class="navbar-item" style="cursor:pointer;" *ngIf="!loggedIn">
-                <a  class="navbar-link" (click)="onLogin()"> Login </a>
-            </li>
-            <li class="navbar-item" style="cursor:pointer;" *ngIf="loggedIn">
-                <a  class="navbar-link" (click)="onLogout()"> Logout </a>
-            </li>
-            <li class="navbar-item" style="cursor:pointer;" *ngIf="!loggedIn">
-                <a  class="navbar-link" (click)="onRegister()"> Register </a>
-            </li>
-        </ul>
+
+<nav class="navbar navbar-default navbar-fixed-top" style="background-color: white; border-color: black;">
+    <div class="container">
+            <div class="navbar-header">
+                <a class="navbar-brand">
+                    <img width="25%" src="../../assets/Medium_brand.png" alt=""style="cursor: pointer;" [routerLink]="['/articles']">
+                </a>
+            </div>
+            <ul class="nav navbar-nav navbar-right">
+                <!--
+                    <li ><a class="navbar-link" style="cursor: pointer;" >Out story</a></li>
+                -->
+                <li><a class="navbar-link" style="cursor: pointer;" (click)="onLogout()" *ngIf="loggedIn"> Log out</a></li>
+                <li><button class = "btn btn-success navbar-btn" (click)="onCreate()" *ngIf="loggedIn">Start writing</button> </li>
+                <li><a  class="navbar-link" style="cursor: pointer;" (click)="onLogin()" *ngIf="!loggedIn"> Sign In</a></li>
+                <li><button class="btn btn-success navbar-btn" (click)="onRegister()" *ngIf="!loggedIn">Get Started</button></li>
+            </ul>
     </div>
-</div>
+</nav>
+
+
+
+
+
 
 

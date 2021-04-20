@@ -1,3 +1,4 @@
+import { UserResponse } from "../user/user-response.model";
 
 export class ArticleResponse{
     public id: number;
@@ -6,9 +7,12 @@ export class ArticleResponse{
 
     public content: string;
 
-    constructor(id: number, title: string, content: string){
+    public user: UserResponse;
+
+    constructor(id: number, title: string, content: string, user: UserResponse){
         this.id = id;
         this.title = title;
         this.content = content;
+        this.user = user;
     }
 }
