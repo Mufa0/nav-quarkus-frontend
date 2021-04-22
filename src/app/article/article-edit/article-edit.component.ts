@@ -5,6 +5,8 @@ import { ArticleRequest } from 'src/app/shared/models/article/article-request.mo
 import { ArticleResponse } from 'src/app/shared/models/article/article-response.model';
 import { ArticleService } from 'src/app/shared/services/article/article.service';
 
+import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic'
+
 @Component({
   selector: 'app-article-edit',
   templateUrl: './article-edit.component.html',
@@ -15,6 +17,8 @@ export class ArticleEditComponent implements OnInit {
   article: ArticleResponse;
 
   form: FormGroup;
+
+  public editor = ClassicEditor;
 
   constructor(private route: ActivatedRoute,private navigation: Router, private articleService: ArticleService) { }
 
@@ -35,6 +39,7 @@ export class ArticleEditComponent implements OnInit {
   }
 
   onSubmit(){
+    console.log(this.form.value)
     const article: ArticleRequest = this.form.value;
     if(this.article.id){
       article.id=this.article.id;

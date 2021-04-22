@@ -4,6 +4,7 @@ import { Pipe, PipeTransform } from "@angular/core";
 export class ShortenPipe implements PipeTransform{
 
     transform(value: string, size: number) {
+        value = value.replace(/<[^>]*>/g, '')
         if(value.length <= size){
             return value
         }

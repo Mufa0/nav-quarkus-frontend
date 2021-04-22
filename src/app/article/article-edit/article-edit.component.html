@@ -5,7 +5,7 @@
     </div>
     <div class="form-group">
       <label for="content">Content</label>
-      <textarea class="form-control vertical" id="content" formControlName="content"></textarea>
+      <ckeditor [editor]="editor" formControlName="content"></ckeditor>
     </div>
     <div class="row">
       <div class="col-md-4">
@@ -13,3 +13,4 @@
       </div>
     </div>
 </form>
+<hr>

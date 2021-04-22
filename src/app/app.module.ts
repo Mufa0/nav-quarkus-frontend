@@ -12,6 +12,7 @@ import { AppRouterModule } from './shared/app-router.module';
 import { ShortenPipe } from './shared/pipes/shorten.pipe';
 import { KeycloakAngularModule, KeycloakService } from 'keycloak-angular';
 import { keycloackInit } from './initializer';
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 
 
 @NgModule({
@@ -29,7 +30,8 @@ import { keycloackInit } from './initializer';
     AppRouterModule,
     ReactiveFormsModule,
     HttpClientModule,
-    KeycloakAngularModule
+    KeycloakAngularModule,
+    CKEditorModule
   ],
   providers: [{
     provide: APP_INITIALIZER, useFactory: keycloackInit, deps:[KeycloakService], multi:true
